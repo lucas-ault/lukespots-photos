@@ -1,6 +1,7 @@
 ---
 description: A selection of fursuit photography examples.
 keywords: [Portfolio, fursuits, fursuit, furry]
+categories: ["Fursuit Photography"]
 title: Fursuit Photography
 weight: 1
 menus: "main"

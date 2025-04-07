@@ -2,7 +2,8 @@
 description: A collection of some of my favorite landscape and street photography work
 menus: "main"
 title: Landscapes and Street Photography
-categories: ["landscales, landscape, street photography, street"]
+keywords: [Landscape, Landscapes, Street Photography, Street]
+categories: ["Landscapes and Street"]
 weight: 3
 params:
   featured_image: azzedine-rouichi-ZS_XuDZmxpM-unsplash.jpg
