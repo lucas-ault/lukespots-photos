@@ -1,9 +1,9 @@
 ---
-description: Fashion and Beauty are a powerful form of self-expression. This category documents style through inspiring shots of street fashion, skincare products, avant-garde editorial photographs, and more.
+description: Great photos help you sell your products quicker - contact me for more information!
 menus: "main"
-title: Fashion & Beauty
+title: Product Photography
 weight: 2
-categories: ["beauty", "fashion"]
+categories: ["Product Photography"]
 params:
   theme: light
 resources:
