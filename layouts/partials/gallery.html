@@ -1,33 +1,47 @@
 <section class="gallery">
+  {{/* Get the cover image from front matter */}}
+  {{ $cover := nil }}
+  {{ range .Params.resources }}
+    {{ if .params.cover }}
+      {{ $cover = $.Resources.GetMatch .src }}
+    {{ end }}
+  {{ end }}
+
+  {{ if $cover }}
+    {{ $coverThumb := $cover.Filter (slice images.AutoOrient (images.Process "fit 1600x1600")) }}
+    <div class="cover-photo mb-6">
+      <img src="{{ $coverThumb.RelPermalink }}" alt="Cover Photo" class="w-full rounded shadow">
+    </div>
+  {{ end }}
+
   <div id="gallery" style="visibility: hidden; height: 1px; overflow: hidden">
     {{ $images := slice }}
     {{ range $image := where (.Resources.ByType "image") "Params.hidden" "ne" true }}
-      {{ $title := "" }}
-      {{ $date := "" }}
-      {{ with $image.Exif }}
-        {{ $date = .Date }}
-        {{ with .Tags.ImageDescription }}
-          {{/* Title from EXIF ImageDescription */}}
-          {{ $title = . }}
+      {{ if or (not $cover) (ne $image.RelPermalink $cover.RelPermalink) }}
+        {{ $title := "" }}
+        {{ $date := "" }}
+        {{ with $image.Exif }}
+          {{ $date = .Date }}
+          {{ with .Tags.ImageDescription }}
+            {{ $title = . }}
+          {{ end }}
         {{ end }}
+        {{ if ne $image.Title $image.Name }}
+          {{ $title = $image.Title }}
+        {{ end }}
+        {{ if $image.Params.Date }}
+          {{ $date = time $image.Params.Date }}
+        {{ end }}
+        {{ $images = $images | append (dict
+          "Name" $image.Name
+          "Title" $title
+          "Date" $date
+          "image" $image
+          "Params" $image.Params
+        ) }}
       {{ end }}
-      {{ if ne $image.Title $image.Name }}
-        {{/* Title from front matter */}}
-        {{ $title = $image.Title }}
-      {{ end }}
-      {{ if $image.Params.Date }}
-        {{/* Date from front matter */}}
-        {{ $date = time $image.Params.Date }}
-      {{ end }}
-      {{ $images = $images | append (dict
-        "Name" $image.Name
-        "Title" $title
-        "Date" $date
-        "image" $image
-        "Params" $image.Params
-        )
-      }}
     {{ end }}
+
     {{ $publishResources := default true .Params.build.publishResources }}
     {{ range sort $images (.Params.sort_by | default "Name") (.Params.sort_order | default "asc") }}
       {{ $image := .image }}
