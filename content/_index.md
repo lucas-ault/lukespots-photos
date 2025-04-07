@@ -1,9 +1,9 @@
 ---
-description: An example site for hugo-theme-gallery. Images from Unsplash.
+description: Luke's photography services and portfolio, bark!
 #lastmod: 2023-07-05
-title: Hugo Gallery
+title: Luke Spots' Photography
 resources:
-  - src: martin-martz-wRuhOOaG-Z4-unsplash.jpg
+  - src: replacethis.jpg
     params:
       cover: true # cover of the home page is used for OpenGraph cards, etc.
 menus:
