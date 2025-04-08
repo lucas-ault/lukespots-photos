@@ -3,27 +3,39 @@ import os
 import sys
 import json
 import requests
+from dotenv import load_dotenv
 
-# The SmugMug API requires an API key.
+# Load environment variables from .env if present (optional)
+load_dotenv()
+
+# Only the API key is now required.
 API_KEY = os.getenv('SMUGMUG_API_KEY')
-ALBUM_ID = os.getenv('SMUGMUG_ALBUM_ID')
+if not API_KEY:
+    sys.exit("Error: Please set SMUGMUG_API_KEY environment variable.")
 
-if not API_KEY or not ALBUM_ID:
-    sys.exit("Error: Please set SMUGMUG_API_KEY and SMUGMUG_ALBUM_ID environment variables.")
-
-# Construct the API URL. (Adjust the endpoint and parameters per SmugMug API documentation.)
-api_url = f"https://api.smugmug.com/api/v2/album/{ALBUM_ID}!images?APIKey={API_KEY}"
-print("Fetching SmugMug data from:", api_url)
-
+# Load the album mapping from data/smugmug_albums.json.
+mapping_file = os.path.join(os.path.dirname(__file__), "..", "data", "smugmug_albums.json")
 try:
-    response = requests.get(api_url)
-    response.raise_for_status()
-    data = response.json()
-
-    # Write the JSON data to data/smugmug-gallery.json
-    output_path = os.path.join(os.path.dirname(__file__), "..", "data", "smugmug-gallery.json")
-    with open(output_path, "w") as outfile:
-        json.dump(data, outfile)
-    print("Data saved to", output_path)
+    with open(mapping_file, 'r') as mf:
+        album_mapping = json.load(mf)
 except Exception as e:
-    sys.exit(f"Error fetching data from SmugMug: {e}")
+    sys.exit(f"Error: Could not load mapping file {mapping_file}: {e}")
+
+# Create the output directory for the per-album JSON files.
+output_dir = os.path.join(os.path.dirname(__file__), "..", "data", "smugmug")
+os.makedirs(output_dir, exist_ok=True)
+
+# Iterate over each album in the mapping.
+for slug, album_id in album_mapping.items():
+    api_url = f"https://api.smugmug.com/api/v2/album/{album_id}!images?APIKey={API_KEY}"
+    print(f"Fetching data for album '{slug}' from: {api_url}")
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status()
+        data = response.json()
+        output_path = os.path.join(output_dir, f"{album_id}.json")
+        with open(output_path, "w") as outfile:
+            json.dump(data, outfile)
+        print("Data saved to", output_path)
+    except Exception as e:
+        sys.exit(f"Error fetching data for album '{slug}': {e}")
