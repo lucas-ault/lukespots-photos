@@ -1,0 +1,41 @@
+{{ define "main" }}
+  <section id="profile">
+    <div class="profile-photo">
+      <img src="{{ .Site.Params.mainPhoto | default "/images/default-photo.jpg" }}" alt="Profile Photo" />
+    </div>
+    <div class="profile-title">
+      <h1>{{ .Site.Title }}</h1>
+    </div>
+    <div class="profile-intro">
+      <p>{{ .Site.Params.introBlurb }}</p>
+    </div>
+  </section>
+
+  <section id="featured-portfolio">
+    <h2>Featured Portfolio</h2>
+    <div class="stacked-polaroids">
+      {{ range .Site.Params.featuredCollections }}
+        <div class="polaroid-thumbnail">
+          <a href="{{ .url }}">
+            <img src="{{ .thumbnail }}" alt="{{ .title }}" />
+          </a>
+          <p>{{ .title }}</p>
+        </div>
+      {{ end }}
+    </div>
+  </section>
+
+  <section id="gallery-grid">
+    <h2>Gallery</h2>
+    <div class="gallery-grid-wrapper">
+      {{ range where .Site.Pages "Section" "galleries" }}
+         <a href="{{ .RelPermalink }}" class="polaroid-grid-item">
+           <!-- Here you can use a preview image from the data if available -->
+           <!-- For simplicity, we use a placeholder if needed -->
+           <img src="/images/default-gallery-preview.jpg" alt="{{ .Title }}">
+           <p>{{ .Title }}</p>
+         </a>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

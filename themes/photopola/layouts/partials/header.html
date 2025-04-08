@@ -1,0 +1,21 @@
+<header>
+  <div class="header-container">
+    <!-- Hamburger icon -->
+    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+    <!-- Navigation menu -->
+    <nav id="site-nav" class="hidden">
+      {{ range .Site.Menus.main }}
+        <a href="{{ .URL }}">{{ .Name }}</a>
+      {{ end }}
+      <!-- External booking link -->
+      <a href="https://examplebookingsite.com" target="_blank">Book Me for a Shoot</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  function toggleMenu() {
+    const nav = document.getElementById('site-nav');
+    nav.classList.toggle('hidden');
+  }
+</script>

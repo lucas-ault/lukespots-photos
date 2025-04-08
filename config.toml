@@ -1,0 +1,31 @@
+baseURL = "https://example.com"
+languageCode = "en-us"
+title = "My Photo Site"
+theme = "photopola"
+
+[params]
+  mainPhoto = "/images/profile.jpg"       # Place your profile image in static/images/
+  introBlurb = "Welcome! I capture moments one click at a time."
+  featuredCollections = [
+    { title = "Portraits", thumbnail = "/images/featured/portraits-thumb.jpg", url = "/galleries/portraits" },
+    { title = "Landscapes", thumbnail = "/images/featured/landscapes-thumb.jpg", url = "/galleries/landscapes" },
+    { title = "Urban", thumbnail = "/images/featured/urban-thumb.jpg", url = "/galleries/urban" }
+  ]
+
+[[menu.main]]
+  identifier = "home"
+  name = "Home"
+  url = "/"
+  weight = 1
+
+[[menu.main]]
+  identifier = "about"
+  name = "About Me"
+  url = "/about"
+  weight = 2
+
+[[menu.main]]
+  identifier = "contact"
+  name = "Contact Me"
+  url = "/contact"
+  weight = 3

@@ -1,0 +1,16 @@
+{{ define "main" }}
+  <h1>{{ .Title }}</h1>
+  <div class="smugmug-gallery-container">
+    {{/* Retrieve the album ID from the page front matter */}}
+    {{ $albumID := .Params.smugmugAlbumID }}
+    {{/* Look up the JSON data stored in data/smugmug/<albumID>.json */}}
+    {{ $galleryData := index .Site.Data.smugmug $albumID }}
+    {{ if $galleryData.Response.Images }}
+      {{ range $galleryData.Response.Images }}
+        <img src="{{ .LargeURL }}" alt="{{ .Title }}" class="gallery-image" />
+      {{ end }}
+    {{ else }}
+      <p>No images available in this gallery.</p>
+    {{ end }}
+  </div>
+{{ end }}

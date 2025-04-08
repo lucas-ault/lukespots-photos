@@ -1,0 +1,3 @@
+name = "Photopola"
+license = "MIT"
+description = "A custom Hugo theme that uses a pre-fetched SmugMug gallery."

@@ -1,10 +1,6 @@
 ---
-layout: page
-rss_ignore: true
-title: About
-menu:
-  main:
-    weight: 90
+title: "About Me"
+date: 2025-04-08T10:00:00Z
 ---
 
-A collection of photos and services offered by Luke Spots
+Hello! I’m [Your Name], a photographer passionate about capturing life's unforgettable moments.

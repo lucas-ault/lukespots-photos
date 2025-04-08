@@ -1,0 +1,17 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - pip install requests python-dotenv
+        - python3 scripts/prefetch-smugmug.py
+    build:
+      commands:
+        - hugo --gc --minify
+  artifacts:
+    baseDirectory: public
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - data/smugmug/**
